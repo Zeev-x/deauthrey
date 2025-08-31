@@ -3,6 +3,7 @@
 
 #define AP_SSID "Reyette-Deauther"
 #define AP_PASS ""
+#define BTN 0 //Boot button
 #define LED 2
 #define SERIAL_DEBUG
 #define CHANNEL_MAX 13
