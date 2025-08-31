@@ -54,7 +54,7 @@ void lcd_init() {
     delay(100);
     typewriterText("ESP32", 16, 4, 500);
     delay(100);
-    typewriterText("Deauther v1.0", 50, 1, 150);
+    typewriterText("Deauthrey v1.0", 50, 1, 150);
     display.display();
 }
 
